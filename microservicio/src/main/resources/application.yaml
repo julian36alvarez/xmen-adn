@@ -1,0 +1,62 @@
+health-check:
+  time: 50
+
+info:
+  app:
+    name: Xmen Cerebro
+    version: 1.0.0
+    description: Spring Reactive Sample Application
+    context: '/'
+
+server:
+  port: 9000
+
+spring:
+  redis:
+    host: ${REDIS_HOST:localhost}
+    port: 6379
+    database: 0
+
+management:
+  endpoints:
+    web:
+      exposure:
+        exclude: '*'
+
+logging:
+  level:
+    reactor:
+      netty:
+        http:
+          client:
+            HttpClient: DEBUG
+
+jasypt:
+  encryptor:
+    password: ${jasyptpwd:secretkey}
+    algorithm: PBEWithMD5AndDES
+
+database:
+  driver: postgres
+  host: ${DB_HOST:localhost}
+  port: ${DB_PORT:5433}
+  name: test
+  username: postgres
+  password: ENC(G9Cl28E/8WnvjMY6XsKf6uW20H/KRQEqWp8P1gnKr1s=)
+  initialization:
+    schema: db/schema.sql
+    data: db/data.sql
+  pool:
+    name: xmen-service-reactivo
+    initial-size: 2
+
+swagger:
+  api:
+    info:
+      title: "${info.app.name}"
+      version: "${info.app.version}"
+      description: "${info.app.description}"
+  contact:
+    name: Julian Alvarez
+    url: https://github.com/julian36alvarez
+    email: julian36alvarez@gmail.com

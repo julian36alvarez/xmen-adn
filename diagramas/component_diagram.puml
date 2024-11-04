@@ -1,0 +1,34 @@
+@startuml
+package "Google Cloud Platform (GCP)" {
+    node "Kubernetes Cluster" {
+        package "Namespace: xmen" {
+            package "Secrets" {
+                [Postgres Secret]
+                [ADN X-Men Microservice Secret]
+            }
+
+            package "Deployments" {
+                [Postgres Deployment]
+                [Redis Deployment]
+                [ADN X-Men Microservice Deployment]
+            }
+
+            package "Services" {
+                [Postgres Service]
+                [Redis Service]
+                [ADN X-Men Microservice Service]
+            }
+        }
+    }
+}
+
+[Postgres Deployment] --> [Postgres Service] : Exposes
+[Redis Deployment] --> [Redis Service] : Exposes
+[ADN X-Men Microservice Deployment] --> [ADN X-Men Microservice Service] : Exposes
+
+[ADN X-Men Microservice Deployment] --> [Redis Service] : Uses
+[ADN X-Men Microservice Deployment] --> [Postgres Service] : Uses
+[ADN X-Men Microservice Deployment] --> [ADN X-Men Microservice Secret] : Uses
+[Postgres Deployment] --> [Postgres Secret] : Uses
+
+@enduml

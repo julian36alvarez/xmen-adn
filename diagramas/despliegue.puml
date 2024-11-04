@@ -1,0 +1,37 @@
+@startuml
+node "GCP" {
+
+  cloud "Google Cloud Load Balancer" as gclb {
+    [API Gateway]
+  }
+
+  node "Google Kubernetes Engine (GKE) Cluster" as gke {
+    component "ADN Xmen Microservice Pod" as microservice #ADD8E6
+    component "Redis Pod" as redis #ADD8E6
+    component "PostgreSQL Pod" as postgres #ADD8E6
+  }
+
+  folder "ConfigMaps & Secrets" as config_secrets #E0E0E0 {
+    artifact "ConfigMap" as configmap
+    artifact "Secret" as secret
+  }
+
+  storage "Persistent Disks" as storage #D3D3D3 {
+    folder "PVC for PostgreSQL" as pvc_postgres
+    folder "PVC for Redis" as pvc_redis
+  }
+
+  [API Gateway] --> microservice : "Exposes (port 80)"
+  microservice --> redis : "Caching (port 6379)"
+  microservice --> postgres : "Database Access (port 5433)"
+
+  postgres --> pvc_postgres : "Persistent Storage"
+  redis --> pvc_redis : "Persistent Storage"
+
+  configmap --> microservice : "Environment Variables"
+  secret --> postgres : "Database Credentials"
+
+  gclb --> microservice : "HTTP/S Traffic"
+  gke --> storage : "Persistent Volumes"
+}
+@enduml

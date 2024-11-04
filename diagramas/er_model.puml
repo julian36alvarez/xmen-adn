@@ -1,0 +1,16 @@
+@startuml
+entity "adns" {
+  * id : serial [PK]
+  * dna : text
+  * isMutant : boolean
+  * createdAt : TIMESTAMP
+}
+
+entity "Redis Cache" {
+  * key : string [PK]
+  * value : string
+  * expiration : TIMESTAMP
+}
+
+adns ||--o{ "Redis Cache" : caches
+@enduml

@@ -1,0 +1,1 @@
+SELECT COUNT(1) AS CNT FROM adns WHERE id <> :id AND nombre = :nombre

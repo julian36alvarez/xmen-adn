@@ -1,0 +1,1 @@
+INSERT INTO adns (dna, ismutant, createdat) VALUES (:dna, :isMutant, :createdAt)

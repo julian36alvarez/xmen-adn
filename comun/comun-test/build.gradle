@@ -1,0 +1,19 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+
+sourceCompatibility = '11'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+
+    implementation project.ext.springbootwebflux
+
+    implementation project.ext.testprojectreactor
+    implementation project.ext.springboottest
+
+    implementation project.ext.h2
+
+}

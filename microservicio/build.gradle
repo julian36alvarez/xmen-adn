@@ -1,0 +1,86 @@
+allprojects {
+
+    apply plugin: 'org.owasp.dependencycheck'
+
+    repositories {
+        mavenCentral()
+    }
+
+    project.ext.apachecommons = [
+            "commons-io:commons-io:2.6",
+            "org.apache.commons:commons-lang3:3.7"
+    ]
+
+    tasks.withType(JavaCompile) {
+        options.encoding = 'UTF-8'
+    }
+
+    tasks.withType(Test) {
+        systemProperty "file.encoding", "UTF-8"
+    }
+
+    // General
+    project.ext.springbootwebflux = ["org.springframework.boot:spring-boot-starter-webflux:${springBootVersion}"]
+    project.ext.actuator = ["org.springframework.boot:spring-boot-starter-actuator:${springBootVersion}"]
+    project.ext.springdevtools = ["org.springframework.boot:spring-boot-devtools:${springBootVersion}"]
+    project.ext.mapstruct = ["org.mapstruct:mapstruct:1.4.2.Final"]
+    project.ext.mapstructprocessor = ["org.mapstruct:mapstruct-processor:1.4.2.Final"]
+    project.ext.lombok = ["org.projectlombok:lombok:1.18.20"]
+
+    // Documentation
+    project.ext.swagger = ["io.springfox:springfox-boot-starter:3.0.0"]
+
+    // Tests
+    project.ext.mockitocore = ['org.mockito:mockito-core:3.11.2']
+    project.ext.mockitoinline = ['org.mockito:mockito-inline:3.11.2']
+    project.ext.mockitojupiter = ['org.mockito:mockito-junit-jupiter:3.11.2']
+    project.ext.testprojectreactor = ["io.projectreactor:reactor-test:3.4.9"]
+    project.ext.springboottest = ["org.springframework.boot:spring-boot-starter-test:${springBootVersion}"]
+    project.ext.h2 = ["com.h2database:h2:1.4.200"]
+    project.ext.databasetest = ["io.r2dbc:r2dbc-h2:0.8.4.RELEASE"]
+
+    // Security
+    project.ext.springbootjasypt = ['com.github.ulisesbocchio:jasypt-spring-boot-starter:2.1.1']
+
+    // Database
+    project.ext.springdatar2dbc = ["org.springframework.boot:spring-boot-starter-data-r2dbc:${springBootVersion}"]
+    project.ext.springdataredis = ["org.springframework.boot:spring-boot-starter-data-redis-reactive:${springBootVersion}"]
+
+
+
+    // Se excluye JUnit 4
+    configurations {
+        runtime.exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+    }
+}
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath 'org.owasp:dependency-check-gradle:6.2.2'
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'org.springframework.boot'
+
+group = 'brain.adn'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    
+    implementation project.ext.springbootwebflux
+    runtimeOnly project.ext.springdevtools
+
+    //implementation project.ext.springbootundertow
+
+    implementation project(':infraestructura')
+}

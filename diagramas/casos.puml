@@ -1,0 +1,17 @@
+@startuml
+left to right direction
+
+actor Cliente as Client
+rectangle "Sistema ADN-Xmen" {
+    usecase "Enviar ADN para análisis" as UC1
+    usecase "Obtener estadísticas de ADN" as UC2
+    usecase "Guardar ADN en la base de datos" as UC3
+    usecase "Consultar estadísticas en caché" as UC4
+}
+
+Client --> UC1 : Interactúa
+Client --> UC2 : Interactúa
+UC1 --> UC3 : Realiza acción
+UC2 --> UC4 : Realiza acción
+
+@enduml

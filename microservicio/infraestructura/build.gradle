@@ -1,0 +1,46 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'jacoco'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+
+    implementation project(':dominio')
+    implementation project(':aplicacion')
+
+    implementation project(':comun:comun-infraestructura')
+    implementation project(':comun:comun-aplicacion')
+
+    implementation project.ext.springbootwebflux
+    implementation project.ext.springdatar2dbc
+    implementation "org.springframework.boot:spring-boot-starter-data-redis-reactive:${springBootVersion}"
+    implementation project.ext.swagger
+    implementation project.ext.actuator
+
+    implementation project.ext.apachecommons
+
+    implementation project.ext.mapstruct
+    annotationProcessor project.ext.mapstructprocessor
+
+    testImplementation project.ext.h2
+    testImplementation project.ext.databasetest
+    testImplementation project.ext.springboottest
+    testImplementation project.ext.testprojectreactor
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled true
+        html.enabled true
+    }
+    additionalSourceDirs files("../aplicacion/src/main/java")
+    additionalClassDirs files("../aplicacion/build/classes/java/main")
+}
+
+test {
+    useJUnitPlatform()
+    finalizedBy jacocoTestReport
+}

@@ -1,0 +1,41 @@
+@startuml
+actor Cliente as Client
+boundary "Google Cloud Load Balancer" as GCLB
+entity "ADN-Xmen Microservice Pod" as Microservice
+entity "Redis Cache" as Redis
+database "PostgreSQL DB" as DB
+
+Client -> GCLB : POST /mutant/ { "dna": ["ATGCGA", "CAGTGC", ...] }
+
+GCLB -> Microservice : Encaminamiento de solicitud
+
+alt Detección en base de datos
+    
+    Microservice -> Microservice : Análisis de secuencia ADN
+
+    alt ADN es mutante
+        Microservice -> DB : Guardar ADN como Mutante
+        Microservice --> GCLB : Respuesta HTTP 200 (Mutante)
+    else ADN no es mutante
+        Microservice -> DB : Guardar ADN como Humano
+        Microservice --> GCLB : Respuesta HTTP 403 (Humano)
+    end
+
+    GCLB --> Client : Respuesta HTTP 200 o 403
+end
+
+== Servicio de estadísticas ==
+Client -> GCLB : GET /stats
+GCLB -> Microservice : Encaminamiento de solicitud de estadísticas
+Microservice -> Redis : Consulta de estadísticas en caché
+alt Estadísticas en caché
+    Redis --> Microservice : Respuesta en caché con estadísticas JSON
+else Estadísticas no en caché
+    Microservice -> DB : Consulta de estadísticas en la base de datos
+    DB --> Microservice : count_mutant_dna, count_human_dna
+    Microservice -> Microservice : Cálculo de ratio
+    Microservice -> Redis : Almacenar estadísticas en caché (TTL: 2 minutos)
+end
+Microservice --> GCLB : Respuesta HTTP 200 con estadísticas JSON
+GCLB --> Client : { "count_mutant_dna": 40, "count_human_dna": 100, "ratio": 0.4 }
+@enduml

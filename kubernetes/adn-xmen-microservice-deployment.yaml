@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: adn-xmen-microservice
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: adn-xmen-microservice
+  template:
+    metadata:
+      labels:
+        app: adn-xmen-microservice
+    spec:
+      containers:
+      - name: adn-xmen-microservice
+        image: julian36alvarez/adn-xmen-microservice
+        env:
+        - name: REDIS_HOST
+          value: "redis"
+        - name: DB_HOST
+          value: "postgres"
+        - name: DB_PORT
+          value: "5432"
+        - name: jasyptpwd
+          valueFrom:
+            secretKeyRef:
+              name: adn-xmen-microservice-secret
+              key: jasyptpwd
+        ports:
+        - containerPort: 9000

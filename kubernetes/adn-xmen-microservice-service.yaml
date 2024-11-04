@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: adn-xmen-microservice
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+    targetPort: 9000
+  selector:
+    app: adn-xmen-microservice

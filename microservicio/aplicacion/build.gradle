@@ -1,0 +1,22 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+
+group = 'brain.adn'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+
+	implementation project(':dominio')
+	implementation project(':comun:comun-aplicacion')
+
+	implementation project.ext.springbootwebflux
+	// implementation project.ext.springtxt
+
+	compileOnly project.ext.lombok
+	annotationProcessor project.ext.lombok
+}

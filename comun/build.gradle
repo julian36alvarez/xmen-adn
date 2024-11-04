@@ -1,0 +1,38 @@
+allprojects {
+
+    repositories {
+        mavenCentral()
+    }
+
+    project.ext.swagger = ["io.springfox:springfox-boot-starter:3.0.0"]
+
+    project.ext.apachecommons = [
+            "commons-io:commons-io:2.6",
+            "org.apache.commons:commons-lang3:3.7"
+    ]
+
+    project.ext.springbootwebflux = ["org.springframework.boot:spring-boot-starter-webflux:${springBootVersion}"]
+    project.ext.springdevtools = ["org.springframework.boot:spring-boot-devtools:${springBootVersion}"]
+
+    project.ext.springdatar2dbc = ["org.springframework.boot:spring-boot-starter-data-r2dbc:${springBootVersion}"]
+
+    project.ext.database = ["io.r2dbc:r2dbc-postgresql:0.8.7.RELEASE"]
+
+    project.ext.springtxt = [
+            "org.springframework:spring-tx:${springVersion}",
+            "org.springframework:spring-context:${springVersion}"
+    ]
+
+    project.ext.springbootjasypt = ['com.github.ulisesbocchio:jasypt-spring-boot-starter:2.1.1']
+
+    project.ext.testprojectreactor = ["io.projectreactor:reactor-test:3.4.9"]
+    project.ext.springboottest = ["org.springframework.boot:spring-boot-starter-test:${springBootVersion}"]
+
+    project.ext.actuator = ["org.springframework.boot:spring-boot-starter-actuator:${springBootVersion}"]
+
+
+    // Se excluye JUnit 4
+    configurations {
+        runtime.exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+    }
+}

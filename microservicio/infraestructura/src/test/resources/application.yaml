@@ -1,0 +1,14 @@
+health-check:
+  time: 50
+
+database:
+  driver: h2
+  initialization:
+    schema: db/schema.sql
+    data: db/data.sql
+
+spring:
+  redis:
+    host: localhost
+    port: 6379
+    database: 0

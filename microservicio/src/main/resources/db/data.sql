@@ -1,0 +1,7 @@
+DELETE FROM adns;
+
+INSERT INTO adns (dna, isMutant, createdAt)
+VALUES
+    ('ATGCGA,CAGTGC,TTATGT,AGAAGG,CCCCTA,TCACTG', true, now()),
+    ('ATGCGA,CAGTGC,TTATGT,AGAAGG,CCCCTA,TCACTG', false, now()),
+    ('ATGCGA,CAGTGC,TTATGT,AGAAGG,CCCCTA,TCACTG', true, now());

@@ -1,0 +1,31 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+
+group = 'brain.adn'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+
+	implementation project(':comun:comun-dominio')
+
+	implementation project.ext.springbootwebflux
+    implementation 'org.projectlombok:lombok:1.18.22'
+    implementation 'org.jetbrains:annotations:20.1.0'
+    runtimeOnly project.ext.springdevtools
+
+	implementation project.ext.springdatar2dbc
+	implementation "org.springframework.boot:spring-boot-starter-data-redis-reactive:${springBootVersion}"
+
+	implementation project.ext.database
+
+	implementation project.ext.springbootjasypt
+	
+	implementation project.ext.apachecommons
+	implementation project.ext.swagger
+	implementation project.ext.actuator
+}
